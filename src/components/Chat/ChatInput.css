@@ -11,6 +11,10 @@
   box-sizing: border-box;
 }
 
+.chat-input:focus-within {
+  border-width: 1.5px;
+}
+
 .chat-input__textarea {
   flex: 1 1 auto;
   border: none;
@@ -51,8 +55,7 @@
   opacity: 0.5;
 }
 
-.chat-input__send:focus-visible,
-.chat-input__textarea:focus-visible {
+.chat-input__send:focus-visible {
   outline: 2px solid var(--color-brand-purple-strong);
   outline-offset: 2px;
 }

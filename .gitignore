@@ -47,3 +47,6 @@ secrets.json
 mpc.json
 .codex/
 .copilot/
+
+.vercel
+.env*
