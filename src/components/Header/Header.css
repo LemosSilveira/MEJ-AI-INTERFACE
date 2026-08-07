@@ -8,6 +8,40 @@
   padding: 0 40px;
 }
 
+.header__sidebar-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  margin-right: 16px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+}
+
+.header__sidebar-toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--color-brand-purple-strong);
+  border-radius: 2px;
+}
+
+.header__sidebar-toggle:hover {
+  background: var(--color-surface-alt);
+}
+
+.header__sidebar-toggle:focus-visible {
+  outline: 2px solid var(--color-brand-purple-strong);
+  outline-offset: 2px;
+}
+
 .header__brand {
   display: flex;
   align-items: center;

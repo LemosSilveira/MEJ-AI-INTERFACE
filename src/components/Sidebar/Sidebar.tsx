@@ -5,11 +5,19 @@ import ufcLogo from '../../assets/ufc-logo.svg'
 import atlabLogo from '../../assets/atlab-logo.png'
 import './Sidebar.css'
 
-function Sidebar() {
+interface SidebarProps {
+  collapsed: boolean
+}
+
+function Sidebar({ collapsed }: SidebarProps) {
   const { state, createConversation, setActiveConversation } = useConversationsContext()
 
   return (
-    <aside className="sidebar">
+    <aside
+      className={`sidebar${collapsed ? ' sidebar--collapsed' : ''}`}
+      aria-hidden={collapsed}
+      inert={collapsed}
+    >
       <NewChatButton onClick={createConversation} />
       <nav className="sidebar__conversations" aria-label="Conversas">
         {state.conversations.map((conversation) => (

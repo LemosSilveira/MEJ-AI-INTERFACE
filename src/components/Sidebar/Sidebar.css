@@ -7,7 +7,11 @@
   flex-direction: column;
   padding: 30px 10px;
   gap: 10px;
+  overflow-x: hidden;
   overflow-y: auto;
+  transition:
+    width 0.2s ease,
+    padding 0.2s ease;
 }
 
 .sidebar__conversations {
@@ -69,4 +73,13 @@
   .sidebar__footer {
     padding: 0 8px;
   }
+}
+
+/* Sempre por último no arquivo: precisa vencer as media queries acima
+   (mesma especificidade) independentemente da largura da viewport. */
+.sidebar--collapsed {
+  width: 0;
+  padding-left: 0;
+  padding-right: 0;
+  border-right: none;
 }
