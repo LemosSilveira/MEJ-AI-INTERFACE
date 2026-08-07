@@ -1,0 +1,72 @@
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-right: 0.2px solid var(--color-border-accent);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.sidebar__conversations {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.sidebar__footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 0 30px;
+  margin: 0;
+}
+
+.sidebar__footer-label,
+.sidebar__footer-project {
+  font-family: var(--font-footer);
+  font-weight: 700;
+  font-size: var(--font-size-footer);
+  color: var(--color-text-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.sidebar__footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar__logo--ufc {
+  height: 22px;
+  width: auto;
+}
+
+.sidebar__logo--atlab {
+  height: 15px;
+  width: auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 260px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebar {
+    width: 200px;
+    padding: 20px 8px;
+  }
+
+  .sidebar__footer {
+    padding: 0 8px;
+  }
+}

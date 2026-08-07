@@ -1,0 +1,92 @@
+.chat-window {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--color-surface-alt);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-window__watermark {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.chat-window__paw {
+  position: absolute;
+  max-width: none;
+  transform: scaleY(-1) rotate(1.15deg);
+}
+
+.chat-window__paw--1 {
+  left: 5.37%;
+  top: -23.23%;
+  width: 55.44%;
+  height: 65.84%;
+}
+
+.chat-window__paw--2 {
+  left: 43.7%;
+  top: 28.43%;
+  width: 65.01%;
+  height: 77.2%;
+}
+
+.chat-window__scroll {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.chat-window__scroll-inner {
+  min-height: 100%;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 56px 40px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-window__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 92px;
+  width: 100%;
+  /* Ancora o bloco embaixo quando cabe no espaço disponível, mas permanece
+     rolável a partir do topo quando a viewport é baixa demais (ver nota em
+     ChatWindow sobre justify-content: flex-end tornar overflow inacessível). */
+  margin-top: auto;
+}
+
+.chat-window__input-bar {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 40px 40px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .chat-window__scroll-inner {
+    padding: 32px 20px 16px;
+    gap: 48px;
+  }
+
+  .chat-window__empty {
+    gap: 48px;
+  }
+
+  .chat-window__input-bar {
+    padding: 0 20px 20px;
+  }
+}

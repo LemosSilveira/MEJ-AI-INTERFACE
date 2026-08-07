@@ -1,0 +1,57 @@
+.header {
+  height: var(--header-height);
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border-bottom: 0.2px solid var(--color-border-accent);
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header__mascot {
+  position: relative;
+  width: 97px;
+  height: 50px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.header__mascot-img {
+  position: absolute;
+  top: -5.67%;
+  left: -0.35%;
+  width: 176.86%;
+  height: 105.67%;
+  max-width: none;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.header__wordmark {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--font-size-wordmark);
+  color: var(--color-brand-purple);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .header {
+    padding: 0 20px;
+  }
+
+  .header__wordmark {
+    font-size: 30px;
+  }
+
+  .header__mascot {
+    width: 68px;
+    height: 35px;
+  }
+}

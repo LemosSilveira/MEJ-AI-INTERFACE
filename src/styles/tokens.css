@@ -1,0 +1,37 @@
+/* Design tokens extraídos do Figma (UFC_AI, nodes 41:5110 e 41:5153) via MCP */
+:root {
+  /* Cores — nomes de variável do Figma entre parênteses */
+  --color-bg-page: #f5f6f8;
+  --color-surface: #fafafa; /* zinc/50 */
+  --color-surface-alt: #f4f4f5; /* zinc/100 */
+  --color-text-primary: #27272a; /* zinc/800 */
+  --color-brand-purple: #8b4fb9; /* UfcInova/70% */
+  --color-brand-purple-strong: #5c069d;
+  --color-nova-conversa-bg: rgba(92, 6, 157, 0.7);
+  --color-send-btn-bg: #8c51bb;
+  --color-border-accent: rgba(92, 6, 157, 0.2);
+  --color-border-accent-strong: rgba(92, 6, 157, 0.5);
+  --color-watermark: rgba(0, 0, 0, 0.06);
+
+  /* Tipografia — Metropolis e UFC_Inova carregadas via @font-face (fonts.css);
+     fallback de sistema entra apenas se o arquivo não carregar. */
+  --font-display: 'Metropolis', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-body: 'Roboto', -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-footer: 'UFC_Inova', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --font-size-wordmark: 45px;
+  --font-size-hero: 30px;
+  --font-size-button: 18px;
+  --font-size-body: 15px;
+  --font-size-chip: 14px;
+  --font-size-footer: 15px;
+
+  /* Raios */
+  --radius-sm: 10px;
+  --radius-lg: 30px;
+  --radius-pill: 50px;
+
+  /* Layout */
+  --header-height: 120px;
+  --sidebar-width: 360px;
+}

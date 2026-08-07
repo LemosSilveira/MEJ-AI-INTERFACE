@@ -1,0 +1,21 @@
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: 51px;
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: var(--font-size-hero);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .empty-state {
+    gap: 28px;
+    font-size: 20px;
+  }
+}

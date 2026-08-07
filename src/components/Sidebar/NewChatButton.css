@@ -1,0 +1,23 @@
+.new-chat-button {
+  width: 100%;
+  min-height: 50px;
+  padding: 15px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-nova-conversa-bg);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--font-size-button);
+  text-align: left;
+  cursor: pointer;
+}
+
+.new-chat-button:hover {
+  filter: brightness(1.08);
+}
+
+.new-chat-button:focus-visible {
+  outline: 2px solid var(--color-brand-purple-strong);
+  outline-offset: 2px;
+}
