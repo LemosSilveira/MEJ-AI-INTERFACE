@@ -1,7 +1,10 @@
+/* No node os três chips de 235px ocupam a largura de 920 do chatCamp, o que dá
+   ~105px entre eles. space-between reproduz isso na largura cheia e degrada
+   sozinho quando a viewport encolhe, sem fixar o 105. */
 .quick-prompts {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   gap: 24px;
   width: 100%;
 }
@@ -32,7 +35,10 @@
   outline-offset: 2px;
 }
 
-@media (max-width: 640px) {
+/* O node mobile põe 3 chips de 90px lado a lado com texto de 6px — ilegível e
+   reprovado em acessibilidade. Empilhamos em largura cheia mantendo o texto no
+   mesmo corpo do desktop, que é o "ajustar a largura do chip" da §8/Etapa 2. */
+@media (max-width: 768px) {
   .quick-prompts {
     flex-direction: column;
     gap: 12px;
@@ -40,5 +46,6 @@
 
   .quick-prompts__chip {
     width: 100%;
+    min-height: 44px;
   }
 }

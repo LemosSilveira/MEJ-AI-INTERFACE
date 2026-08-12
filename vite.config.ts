@@ -2,9 +2,13 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, isPreview }) => ({
   // GitHub Pages serve o projeto em /MEJ-AI-INTERFACE/, não na raiz do domínio.
-  base: command === 'build' ? '/MEJ-AI-INTERFACE/' : '/',
+  // `vite preview` roda com command === 'serve'; sem incluir isPreview aqui ele
+  // serviria em '/' enquanto o index.html gerado aponta para /MEJ-AI-INTERFACE/,
+  // e o preview devolveria o fallback de SPA no lugar de cada asset — ou seja,
+  // não serviria para conferir o subdiretório, que é justamente o seu papel.
+  base: command === 'build' || isPreview ? '/MEJ-AI-INTERFACE/' : '/',
   plugins: [react()],
   server: {
     proxy: {

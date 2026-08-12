@@ -2,50 +2,61 @@
   height: var(--header-height);
   flex-shrink: 0;
   background: var(--color-surface);
-  border-bottom: 0.2px solid var(--color-border-accent);
+  border-bottom: var(--border-width-hairline) solid var(--color-border-accent);
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 var(--header-pad-right) 0 var(--header-pad-left);
 }
 
+/* 30×20 é a geometria exata do Vector do node: 3 barras de 3.33px separadas por
+   5px. space-between deriva os 5px sozinho, sem número mágico. */
 .header__sidebar-toggle {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 4px;
-  width: 36px;
-  height: 36px;
-  padding: 8px;
-  margin-right: 16px;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
   flex-shrink: 0;
+  padding: 0;
   border: none;
-  border-radius: var(--radius-sm);
   background: transparent;
   cursor: pointer;
 }
 
-.header__sidebar-toggle span {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background: var(--color-brand-purple-strong);
-  border-radius: 2px;
+/* Área de toque de 44×44 sem inflar a caixa e empurrar a marca (§3.5). */
+.header__sidebar-toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
 }
 
-.header__sidebar-toggle:hover {
-  background: var(--color-surface-alt);
+.header__sidebar-toggle span {
+  display: block;
+  height: 3.33px;
+  width: 100%;
+  background: var(--color-brand-purple);
+}
+
+.header__sidebar-toggle:hover span {
+  background: var(--color-brand-purple-strong);
 }
 
 .header__sidebar-toggle:focus-visible {
   outline: 2px solid var(--color-brand-purple-strong);
-  outline-offset: 2px;
+  outline-offset: 6px;
 }
 
 .header__brand {
   display: flex;
   align-items: center;
   gap: 6px;
+  /* O node põe a marca em x=90.8 com o toggle em x=30 (30px de largura). */
+  margin-left: 30.8px;
 }
 
 .header__mascot {
@@ -75,17 +86,57 @@
   white-space: nowrap;
 }
 
-@media (max-width: 640px) {
+.header__inova-link {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+}
+
+.header__inova-link:focus-visible {
+  outline: 2px solid var(--color-brand-purple-strong);
+  outline-offset: 4px;
+}
+
+.header__inova-logo {
+  display: block;
+  width: 227px;
+  height: 64px;
+}
+
+/* Medidas do node 50:3390 (NavBar de 40px em viewport de 393px). */
+@media (max-width: 768px) {
   .header {
-    padding: 0 20px;
+    height: var(--header-height-mobile);
+    padding: 0 13px 0 11px;
+  }
+
+  .header__sidebar-toggle {
+    width: 22px;
+    height: 15px;
+  }
+
+  .header__sidebar-toggle span {
+    height: 2.5px;
+  }
+
+  .header__brand {
+    margin-left: 11px;
+    gap: 2px;
   }
 
   .header__wordmark {
-    font-size: 30px;
+    font-size: 15px;
   }
 
   .header__mascot {
-    width: 68px;
-    height: 35px;
+    width: 33px;
+    height: 17px;
+  }
+
+  .header__inova-logo {
+    width: 67px;
+    height: 19px;
   }
 }

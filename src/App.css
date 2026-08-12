@@ -9,4 +9,14 @@
   flex: 1 1 auto;
   display: flex;
   min-height: 0;
+  position: relative;
+}
+
+/* O node 50:3446 não desenha scrim, mas o §4.3 exige um fundo clicável que
+   feche o drawer. Fica discreto para não brigar com o desenho. */
+.app-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(39, 39, 42, 0.35);
 }

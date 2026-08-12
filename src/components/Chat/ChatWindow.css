@@ -43,10 +43,12 @@
   overflow-y: auto;
 }
 
+/* O chatCamp do Figma tem 920px de conteúdo dentro de um Chat de 1080. Com
+   40px de padding de cada lado, o max-width vira 1000 para o conteúdo dar 920. */
 .chat-window__scroll-inner {
   min-height: 100%;
   width: 100%;
-  max-width: 920px;
+  max-width: calc(var(--content-width) + 80px);
   margin: 0 auto;
   padding: 56px 40px 24px;
   display: flex;
@@ -70,23 +72,27 @@
   z-index: 1;
   flex: 0 0 auto;
   width: 100%;
-  max-width: 920px;
+  max-width: calc(var(--content-width) + 80px);
   margin: 0 auto;
   padding: 0 40px 40px;
   box-sizing: border-box;
 }
 
-@media (max-width: 640px) {
+/* Node 50:3390: conteúdo de 353px numa viewport de 393 (20px de cada lado) e
+   gap de 37px entre os blocos. */
+@media (max-width: 768px) {
   .chat-window__scroll-inner {
-    padding: 32px 20px 16px;
-    gap: 48px;
+    padding: 30px 20px 16px;
+    gap: 37px;
   }
 
   .chat-window__empty {
-    gap: 48px;
+    gap: 37px;
   }
 
+  /* env() respeita a barra inferior do iPhone; o fallback de 0px cobre os
+     navegadores que não a expõem (§4.2). */
   .chat-window__input-bar {
-    padding: 0 20px 20px;
+    padding: 0 20px calc(20px + env(safe-area-inset-bottom, 0px));
   }
 }

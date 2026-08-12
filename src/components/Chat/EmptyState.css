@@ -13,9 +13,10 @@
   margin: 0;
 }
 
-@media (max-width: 640px) {
+/* Node 50:3390: texto de 15px, gap de 51px entre os dois parágrafos. */
+@media (max-width: 768px) {
   .empty-state {
-    gap: 28px;
-    font-size: 20px;
+    gap: 51px;
+    font-size: var(--font-size-body);
   }
 }

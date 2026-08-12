@@ -2,7 +2,7 @@
   width: var(--sidebar-width);
   flex-shrink: 0;
   background: var(--color-surface);
-  border-right: 0.2px solid var(--color-border-accent);
+  border-right: var(--border-width-hairline) solid var(--color-border-accent);
   display: flex;
   flex-direction: column;
   padding: 30px 10px;
@@ -14,6 +14,15 @@
     padding 0.2s ease;
 }
 
+.sidebar:focus {
+  outline: none;
+}
+
+/* Cabeçalho interno existe só no drawer mobile (node 50:3446). */
+.sidebar__drawer-head {
+  display: none;
+}
+
 .sidebar__conversations {
   flex: 1 1 auto;
   display: flex;
@@ -22,40 +31,50 @@
   overflow-y: auto;
 }
 
+/* O node 50:3323 deixou no rodapé apenas o brasão: os textos "Parcerias:" e
+   "Projeto PDI - AI/WEB" e a logo do ATLAB saíram do design. */
 .sidebar__footer {
   flex-shrink: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 15px;
-  padding: 0 30px;
+  justify-content: center;
+  height: 105px;
   margin: 0;
 }
 
-.sidebar__footer-label,
-.sidebar__footer-project {
-  font-family: var(--font-footer);
-  font-weight: 700;
-  font-size: var(--font-size-footer);
-  color: var(--color-text-primary);
-  margin: 0;
-  text-align: center;
+/* inline-flex zera o espaço de baseline que um <a> inline criaria em volta
+   da imagem — o rodapé não pode mudar de altura por causa do link (§3.6). */
+.sidebar__logo-link {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
 }
 
-.sidebar__footer-logos {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* Área de toque de no mínimo 44×44 sem alterar o fluxo: o pseudo-elemento
+   cresce por cima do layout em vez de empurrar os irmãos (§3.5). */
+.sidebar__logo-link::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.sidebar__logo-link:focus-visible {
+  outline: 2px solid var(--color-brand-purple-strong);
+  outline-offset: 4px;
 }
 
 .sidebar__logo--ufc {
-  height: 22px;
-  width: auto;
-}
-
-.sidebar__logo--atlab {
-  height: 15px;
-  width: auto;
+  display: block;
+  width: 150.14px;
+  height: 99.4px;
 }
 
 @media (max-width: 1024px) {
@@ -64,22 +83,101 @@
   }
 }
 
-@media (max-width: 640px) {
-  .sidebar {
-    width: 200px;
-    padding: 20px 8px;
-  }
-
-  .sidebar__footer {
-    padding: 0 8px;
-  }
-}
-
-/* Sempre por último no arquivo: precisa vencer as media queries acima
-   (mesma especificidade) independentemente da largura da viewport. */
-.sidebar--collapsed {
+/* Desktop recolhido: sai do fluxo encolhendo a largura. Precisa vir depois das
+   media queries de largura acima para vencê-las na mesma especificidade. */
+.sidebar:not(.sidebar--open) {
   width: 0;
   padding-left: 0;
   padding-right: 0;
   border-right: none;
+}
+
+/* ---------- Mobile: drawer sobreposto (nodes 50:3390 e 50:3446) ---------- */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    width: var(--sidebar-width-mobile);
+    height: 100%;
+    padding: 12px 20px;
+    gap: 18px;
+    border-right: var(--border-width-hairline) solid var(--color-border-accent);
+    /* Fora do fluxo: o chat ocupa 100% da largura mesmo com o drawer fechado. */
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  /* Reverte o encolhimento do desktop: no mobile quem esconde é o transform,
+     não a largura — senão o drawer animaria a partir de uma caixa de 0px. */
+  .sidebar:not(.sidebar--open) {
+    width: var(--sidebar-width-mobile);
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: var(--border-width-hairline) solid var(--color-border-accent);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  .sidebar__drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    height: 28px;
+  }
+
+  .sidebar__drawer-mascot {
+    width: 33px;
+    height: 17px;
+    object-fit: cover;
+    opacity: 0.8;
+  }
+
+  .sidebar__drawer-close {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 15px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .sidebar__drawer-close::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+  }
+
+  .sidebar__drawer-close span {
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    background: var(--color-brand-purple);
+  }
+
+  .sidebar__drawer-close:focus-visible {
+    outline: 2px solid var(--color-brand-purple-strong);
+    outline-offset: 6px;
+  }
+
+  .sidebar__footer {
+    height: 122px;
+  }
+
+  .sidebar__logo--ufc {
+    width: 99px;
+    height: 65.54px;
+  }
 }
