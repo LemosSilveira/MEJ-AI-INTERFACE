@@ -21,3 +21,12 @@
   outline: 2px solid var(--color-brand-purple-strong);
   outline-offset: 2px;
 }
+
+/* Node 50:3446: 36px de altura e texto de 14px dentro do drawer. */
+@media (max-width: 768px) {
+  .new-chat-button {
+    min-height: 36px;
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+}

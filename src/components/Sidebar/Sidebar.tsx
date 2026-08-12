@@ -1,45 +1,100 @@
+import { useEffect, useRef } from 'react'
 import { useConversationsContext } from '../../hooks/useConversationsContext'
+import { EXTERNAL_LINKS } from '../../constants/links'
 import NewChatButton from './NewChatButton'
 import ConversationItem from './ConversationItem'
-import ufcLogo from '../../assets/ufc-logo.svg'
-import atlabLogo from '../../assets/atlab-logo.png'
+import mascotHeader from '../../assets/mascot-header.png'
+import ufcBrasao from '../../assets/ufc-brasao.svg'
 import './Sidebar.css'
 
 interface SidebarProps {
-  collapsed: boolean
+  open: boolean
+  isDrawer: boolean
+  onClose: () => void
 }
 
-function Sidebar({ collapsed }: SidebarProps) {
+function Sidebar({ open, isDrawer, onClose }: SidebarProps) {
   const { state, createConversation, setActiveConversation } = useConversationsContext()
+  const asideRef = useRef<HTMLElement>(null)
+
+  const isDrawerOpen = isDrawer && open
+
+  useEffect(() => {
+    if (!isDrawerOpen) return
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [isDrawerOpen, onClose])
+
+  // Foco entra no drawer ao abrir, para leitor de tela e teclado não ficarem
+  // presos atrás do overlay (§4.3).
+  useEffect(() => {
+    if (!isDrawerOpen) return
+    asideRef.current?.focus()
+  }, [isDrawerOpen])
+
+  function handleSelect(conversationId: string) {
+    setActiveConversation(conversationId)
+    if (isDrawer) onClose()
+  }
+
+  function handleCreate() {
+    createConversation()
+    if (isDrawer) onClose()
+  }
 
   return (
     <aside
-      className={`sidebar${collapsed ? ' sidebar--collapsed' : ''}`}
-      aria-hidden={collapsed}
-      inert={collapsed}
+      id="sidebar"
+      ref={asideRef}
+      tabIndex={-1}
+      className={`sidebar${open ? ' sidebar--open' : ''}`}
+      aria-label="Conversas"
+      aria-hidden={!open}
+      inert={!open}
     >
-      <NewChatButton onClick={createConversation} />
-      <nav className="sidebar__conversations" aria-label="Conversas">
+      {/* Cabeçalho interno do drawer (node 50:3446). O CSS o esconde no desktop. */}
+      <div className="sidebar__drawer-head">
+        <img src={mascotHeader} alt="" className="sidebar__drawer-mascot" />
+        <button
+          type="button"
+          className="sidebar__drawer-close"
+          onClick={onClose}
+          aria-label="Fechar barra lateral"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+      </div>
+
+      <NewChatButton onClick={handleCreate} />
+      <nav className="sidebar__conversations" aria-label="Lista de conversas">
         {state.conversations.map((conversation) => (
           <ConversationItem
             key={conversation.id}
             conversation={conversation}
             isActive={conversation.id === state.activeConversationId}
-            onClick={() => setActiveConversation(conversation.id)}
+            onClick={() => handleSelect(conversation.id)}
           />
         ))}
       </nav>
       <footer className="sidebar__footer">
-        <p className="sidebar__footer-label">Parcerias:</p>
-        <p className="sidebar__footer-project">Projeto PDI - AI/WEB</p>
-        <div className="sidebar__footer-logos">
+        <a
+          href={EXTERNAL_LINKS.ufc}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sidebar__logo-link"
+          aria-label="Site da Universidade Federal do Ceará"
+        >
           <img
-            src={ufcLogo}
+            src={ufcBrasao}
             alt="Universidade Federal do Ceará"
             className="sidebar__logo sidebar__logo--ufc"
           />
-          <img src={atlabLogo} alt="ATLAB" className="sidebar__logo sidebar__logo--atlab" />
-        </div>
+        </a>
       </footer>
     </aside>
   )
