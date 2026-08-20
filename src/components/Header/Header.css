@@ -54,36 +54,19 @@
 .header__brand {
   display: flex;
   align-items: center;
-  gap: 6px;
-  /* O node põe a marca em x=90.8 com o toggle em x=30 (30px de largura). */
-  margin-left: 30.8px;
+  /* O node põe a marca em x=72 com o toggle em x=30 (30px de largura). */
+  margin-left: 12px;
 }
 
-.header__mascot {
-  position: relative;
-  width: 97px;
-  height: 50px;
+/* Nodes 85:3832 e 85:4106: a arte tem 300×161 mas é quase toda margem — o
+   desenho ocupa a faixa central. Recortamos para a altura do header em vez de
+   escalar o arquivo inteiro, que deixaria o wordmark minúsculo. */
+.header__wordmark-img {
+  display: block;
+  width: 150px;
+  height: 81px;
+  object-fit: contain;
   flex-shrink: 0;
-  overflow: hidden;
-}
-
-.header__mascot-img {
-  position: absolute;
-  top: -5.67%;
-  left: -0.35%;
-  width: 176.86%;
-  height: 105.67%;
-  max-width: none;
-  opacity: 0.8;
-  pointer-events: none;
-}
-
-.header__wordmark {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: var(--font-size-wordmark);
-  color: var(--color-brand-purple);
-  white-space: nowrap;
 }
 
 .header__inova-link {
@@ -123,16 +106,12 @@
 
   .header__brand {
     margin-left: 11px;
-    gap: 2px;
   }
 
-  .header__wordmark {
-    font-size: 15px;
-  }
-
-  .header__mascot {
-    width: 33px;
-    height: 17px;
+  /* Node 85:4292: o wordmark cabe na NavBar de 40px. */
+  .header__wordmark-img {
+    width: 70px;
+    height: 32px;
   }
 
   .header__inova-logo {

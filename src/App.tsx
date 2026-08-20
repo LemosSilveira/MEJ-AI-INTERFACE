@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { ConversationsProvider } from './context/ConversationsContext'
+import { useConversationsContext } from './hooks/useConversationsContext'
+import { normalizarModelo } from './constants/modelos'
 import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
 import ChatWindow from './components/Chat/ChatWindow'
@@ -14,7 +16,13 @@ const DESKTOP_QUERY = '(min-width: 769px)'
 const isDesktopNow = () =>
   typeof window === 'undefined' || window.matchMedia(DESKTOP_QUERY).matches
 
-function App() {
+/**
+ * Componente interno porque precisa LER o contexto de conversas — o modelo
+ * ativo agora mora na conversa (§3.2), e quem renderiza o Provider não pode
+ * consumi-lo no mesmo nível.
+ */
+function AppShell() {
+  const { activeConversation } = useConversationsContext()
   const [isDesktop, setIsDesktop] = useState(isDesktopNow)
   const [isSidebarOpen, setIsSidebarOpen] = useState(isDesktopNow)
 
@@ -46,18 +54,27 @@ function App() {
     }
   }, [isDrawerOpen])
 
+  // Último portão antes do DOM: mesmo com o tipo garantindo a união, o valor
+  // passa por normalizarModelo para que nada além de 'junior'/'vitra' chegue
+  // ao atributo — é a defesa contra injeção de atributo da §8.2 (T32).
+  const modelo = normalizarModelo(activeConversation.modelo)
+
+  return (
+    <div className="app-shell" data-modelo={modelo}>
+      <Header isSidebarOpen={isSidebarOpen} onToggleSidebar={toggleSidebar} modelo={modelo} />
+      <div className="app-body">
+        {isDrawerOpen && <div className="app-overlay" onClick={closeSidebar} aria-hidden="true" />}
+        <Sidebar open={isSidebarOpen} isDrawer={isDrawer} onClose={closeSidebar} />
+        <ChatWindow modelo={modelo} />
+      </div>
+    </div>
+  )
+}
+
+function App() {
   return (
     <ConversationsProvider>
-      <div className="app-shell">
-        <Header isSidebarOpen={isSidebarOpen} onToggleSidebar={toggleSidebar} />
-        <div className="app-body">
-          {isDrawerOpen && (
-            <div className="app-overlay" onClick={closeSidebar} aria-hidden="true" />
-          )}
-          <Sidebar open={isSidebarOpen} isDrawer={isDrawer} onClose={closeSidebar} />
-          <ChatWindow />
-        </div>
-      </div>
+      <AppShell />
     </ConversationsProvider>
   )
 }

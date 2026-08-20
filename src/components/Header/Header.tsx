@@ -1,14 +1,18 @@
 import { EXTERNAL_LINKS } from '../../constants/links'
-import mascotHeader from '../../assets/mascot-header.png'
+import { ASSETS_POR_MODELO } from '../../constants/assets'
+import type { Modelo } from '../../constants/modelos'
 import ufcInovaLogo from '../../assets/ufc-inova-logo.svg'
 import './Header.css'
 
 interface HeaderProps {
   isSidebarOpen: boolean
   onToggleSidebar: () => void
+  modelo: Modelo
 }
 
-function Header({ isSidebarOpen, onToggleSidebar }: HeaderProps) {
+function Header({ isSidebarOpen, onToggleSidebar, modelo }: HeaderProps) {
+  const { wordmark, wordmarkAlt } = ASSETS_POR_MODELO[modelo]
+
   return (
     <header className="header">
       <button
@@ -23,11 +27,11 @@ function Header({ isSidebarOpen, onToggleSidebar }: HeaderProps) {
         <span />
         <span />
       </button>
+      {/* O wordmark do v3 já traz o nome desenhado, então ele é a marca inteira
+          — o mascote separado e o texto "MEJ IA" saíram do design (node 85:3832
+          / 85:4106). O alt carrega o nome para quem usa leitor de tela. */}
       <div className="header__brand">
-        <div className="header__mascot" aria-hidden="true">
-          <img src={mascotHeader} alt="" className="header__mascot-img" />
-        </div>
-        <span className="header__wordmark">MEJ IA</span>
+        <img src={wordmark} alt={wordmarkAlt} className="header__wordmark-img" />
       </div>
       <a
         href={EXTERNAL_LINKS.ufcInova}

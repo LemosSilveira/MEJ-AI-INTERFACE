@@ -14,6 +14,13 @@
     padding 0.2s ease;
 }
 
+/* §7.4: recolher/expandir a sidebar no desktop passa a ser instantâneo. */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}
+
 .sidebar:focus {
   outline: none;
 }
@@ -100,7 +107,8 @@
     left: 0;
     z-index: 30;
     width: var(--sidebar-width-mobile);
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     padding: 12px 20px;
     gap: 18px;
     border-right: var(--border-width-hairline) solid var(--color-border-accent);
@@ -122,19 +130,27 @@
     transform: translateX(0);
   }
 
+  /* §7.4: o drawer aparece e some sem deslizar, mas continua funcionando. */
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar {
+      transition: none;
+    }
+  }
+
   .sidebar__drawer-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
-    height: 28px;
+    /* Acompanha o wordmark de 36px, que é mais alto que o mascote que saiu. */
+    min-height: 36px;
   }
 
-  .sidebar__drawer-mascot {
-    width: 33px;
-    height: 17px;
-    object-fit: cover;
-    opacity: 0.8;
+  /* Node 85:4666: o wordmark do modelo ocupa o canto superior do drawer. */
+  .sidebar__drawer-wordmark {
+    width: 78px;
+    height: 36px;
+    object-fit: contain;
   }
 
   .sidebar__drawer-close {

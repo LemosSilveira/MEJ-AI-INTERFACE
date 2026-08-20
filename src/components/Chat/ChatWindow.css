@@ -15,10 +15,18 @@
   pointer-events: none;
 }
 
+/* A silhueta vem do SVG como MÁSCARA e a cor vem do token, então um único par
+   de arquivos serve aos dois temas. A opacidade saiu de dentro do SVG e virou
+   --watermark-opacity para ficar visível no CSS. */
 .chat-window__paw {
   position: absolute;
-  max-width: none;
+  background-color: var(--cor-primaria);
+  opacity: var(--watermark-opacity);
   transform: scaleY(-1) rotate(1.15deg);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
 }
 
 .chat-window__paw--1 {
@@ -26,6 +34,8 @@
   top: -23.23%;
   width: 55.44%;
   height: 65.84%;
+  mask-image: url('../../assets/v3/watermark-1.svg');
+  -webkit-mask-image: url('../../assets/v3/watermark-1.svg');
 }
 
 .chat-window__paw--2 {
@@ -33,6 +43,8 @@
   top: 28.43%;
   width: 65.01%;
   height: 77.2%;
+  mask-image: url('../../assets/v3/watermark-2.svg');
+  -webkit-mask-image: url('../../assets/v3/watermark-2.svg');
 }
 
 .chat-window__scroll {

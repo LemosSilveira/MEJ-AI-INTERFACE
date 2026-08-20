@@ -68,6 +68,17 @@
   }
 }
 
+/* §7.4. Este é o indicador que fica mais tempo na tela — a resposta leva de 8
+   a 13 segundos para começar a chegar —, então respeitar a preferência aqui
+   importa mais do que em qualquer outra animação. Os pontos ficam parados mas
+   visíveis: continua comunicando "estou processando". */
+@media (prefers-reduced-motion: reduce) {
+  .message-bubble__typing span {
+    animation: none;
+    opacity: 0.55;
+  }
+}
+
 .message-bubble__error {
   display: flex;
   align-items: center;

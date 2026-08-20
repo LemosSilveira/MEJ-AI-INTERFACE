@@ -1,0 +1,135 @@
+.model-selector {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Node 85:3779: nome em 20px zinc/700 + chevron de 16×10, com 5px entre eles. */
+.model-selector__trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 20px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.model-selector__trigger:focus-visible {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.model-selector__chevron {
+  display: block;
+  width: 16px;
+  height: 10px;
+  transition: transform 0.2s ease;
+}
+
+.model-selector__chevron--aberto {
+  transform: rotate(180deg);
+}
+
+/* Node 85:4026: 274×153, zinc/700, raio 20px, ancorado ACIMA do gatilho —
+   a barra de input fica no rodapé, então abrir para baixo sairia da tela. */
+.model-selector__menu {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  z-index: 40;
+  width: 274px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 24px 17px;
+  border-radius: 20px;
+  background: var(--color-text-secondary);
+  box-shadow: 0 8px 24px rgba(39, 39, 42, 0.24);
+}
+
+.model-selector__opcao {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  padding: 4px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: #fff;
+}
+
+.model-selector__opcao:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.model-selector__opcao:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+.model-selector__opcao-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.model-selector__opcao-nome {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.model-selector__check {
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+/* Metropolis Thin no node; 200 cai no peso mais leve disponível. */
+.model-selector__opcao-desc {
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+/* Node 85:4310: no mobile o gatilho cai para 14px e o chevron para 13×8. */
+@media (max-width: 768px) {
+  .model-selector__trigger {
+    font-size: 14px;
+    /* Alvo de toque de 44px de altura sem esticar a barra de input de 52px. */
+    min-height: 44px;
+    padding: 0 4px;
+  }
+
+  .model-selector__chevron {
+    width: 13px;
+    height: 8px;
+  }
+
+  /* Não pode estourar a viewport de 393px nem passar por baixo do input. */
+  .model-selector__menu {
+    width: min(274px, calc(100vw - 40px));
+    padding: 18px 14px;
+    gap: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .model-selector__chevron {
+    transition: none;
+  }
+}

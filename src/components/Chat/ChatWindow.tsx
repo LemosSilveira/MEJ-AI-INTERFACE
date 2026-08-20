@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useConversationsContext } from '../../hooks/useConversationsContext'
-import pawOne from '../../assets/watermark-paw-1.svg'
-import pawTwo from '../../assets/watermark-paw-2.svg'
+import type { Modelo } from '../../constants/modelos'
 import EmptyState from './EmptyState'
 import QuickPrompts from './QuickPrompts'
 import MessageList from './MessageList'
@@ -10,7 +9,11 @@ import './ChatWindow.css'
 
 const STICK_TO_BOTTOM_THRESHOLD = 80
 
-function ChatWindow() {
+interface ChatWindowProps {
+  modelo: Modelo
+}
+
+function ChatWindow({ modelo }: ChatWindowProps) {
   const { activeConversation, sendMessage } = useConversationsContext()
   const scrollRef = useRef<HTMLDivElement>(null)
   const stickToBottomRef = useRef(true)
@@ -43,9 +46,12 @@ function ChatWindow() {
 
   return (
     <main className="chat-window">
+      {/* Divs, não <img>: o desenho é pintado por mask-image com
+          background: var(--cor-primaria), que é o que faz a marca d'água
+          acompanhar o tema sem precisar de um arquivo por modelo (§2.2). */}
       <div className="chat-window__watermark" aria-hidden="true">
-        <img src={pawOne} alt="" className="chat-window__paw chat-window__paw--1" />
-        <img src={pawTwo} alt="" className="chat-window__paw chat-window__paw--2" />
+        <div className="chat-window__paw chat-window__paw--1" />
+        <div className="chat-window__paw chat-window__paw--2" />
       </div>
 
       <div className="chat-window__scroll" ref={scrollRef} onScroll={handleScroll}>
@@ -54,8 +60,8 @@ function ChatWindow() {
             <MessageList conversation={activeConversation} />
           ) : (
             <div className="chat-window__empty">
-              <EmptyState />
-              <QuickPrompts onSelect={handleQuickPrompt} />
+              <EmptyState modelo={modelo} />
+              <QuickPrompts modelo={modelo} onSelect={handleQuickPrompt} />
             </div>
           )}
         </div>

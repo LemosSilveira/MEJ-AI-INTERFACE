@@ -1,0 +1,57 @@
+# PRD v3 §6.2 e §8.5. Sem este arquivo o `COPY . .` do estágio de build leva
+# .env, .git e node_modules para dentro da imagem intermediária — e o histórico
+# do Git e as variáveis de ambiente ficam recuperáveis por `docker history`.
+
+# Dependências: reinstaladas por `npm ci` dentro da imagem. Copiar as locais
+# também quebraria binários nativos compilados para outro sistema.
+node_modules
+**/node_modules
+
+# Build local: a imagem gera o seu próprio.
+dist
+dist-ssr
+build
+
+# Histórico e metadados do Git
+.git
+.gitignore
+.github
+
+# Segredos — o motivo nº 1 deste arquivo existir
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Configuração local de ferramentas de IA/dev
+.claude
+.codex
+.copilot
+mpc.json
+.vercel
+
+# Logs e ruído de editor
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Documentação e o próprio Docker: não afetam o bundle, e mantê-los fora
+# preserva o cache de camada quando só um PRD muda.
+docs
+README.md
+Dockerfile
+.dockerignore
+docker-compose.yml

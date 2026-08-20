@@ -22,11 +22,13 @@
   outline-offset: 2px;
 }
 
-/* Node 50:3446: 36px de altura e texto de 14px dentro do drawer. */
+/* Node 85:4661 pede 36px de altura e texto de 14px dentro do drawer. Mantemos
+   o texto em 14px, mas a altura sobe para 44px: 36px reprova no alvo mínimo de
+   toque exigido pela Etapa 7, e este é o botão principal do drawer. */
 @media (max-width: 768px) {
   .new-chat-button {
-    min-height: 36px;
-    padding: 8px 20px;
+    min-height: 44px;
+    padding: 10px 20px;
     font-size: 14px;
   }
 }

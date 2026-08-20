@@ -1,13 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/brasao4_vertical_cor.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MEJ_AI</title>
+    <title>MEJ IA</title>
+    <!--
+      PRD v3 §7.3: estado de carregamento até o React montar, para o bundle não
+      deixar tela branca. É CSS puro, não GIF (§7): pesa quase nada, herda a cor
+      do tema e não serrilha.
+
+      Vive aqui, e não num componente, porque precisa existir ANTES do React
+      carregar. Some sozinho: assim que o React renderiza dentro de #root, a
+      regra `#root:not(:empty) + .boot` o esconde — sem script, sem timer e sem
+      risco de ficar preso na tela se algo falhar no meio do caminho.
+    -->
+    <style>
+      .boot {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f6f8;
+      }
+
+      #root:not(:empty) + .boot {
+        display: none;
+      }
+
+      .boot__spinner {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 3px solid rgba(244, 123, 34, 0.25);
+        border-top-color: #f47b22;
+        animation: boot-spin 0.8s linear infinite;
+      }
+
+      @keyframes boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* §7.4: quem pediu menos animação recebe um indicador estático. */
+      @media (prefers-reduced-motion: reduce) {
+        .boot__spinner {
+          animation: none;
+          border-top-color: rgba(244, 123, 34, 0.25);
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div class="boot" role="status" aria-label="Carregando a MEJ IA">
+      <div class="boot__spinner"></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
