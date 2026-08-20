@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { useConversationsContext } from '../../hooks/useConversationsContext'
 import { EXTERNAL_LINKS } from '../../constants/links'
+import { ASSETS_POR_MODELO } from '../../constants/assets'
 import NewChatButton from './NewChatButton'
 import ConversationItem from './ConversationItem'
-import mascotHeader from '../../assets/mascot-header.png'
 import ufcBrasao from '../../assets/ufc-brasao.svg'
 import './Sidebar.css'
 
@@ -14,7 +14,8 @@ interface SidebarProps {
 }
 
 function Sidebar({ open, isDrawer, onClose }: SidebarProps) {
-  const { state, createConversation, setActiveConversation } = useConversationsContext()
+  const { state, activeConversation, createConversation, setActiveConversation } =
+    useConversationsContext()
   const asideRef = useRef<HTMLElement>(null)
 
   const isDrawerOpen = isDrawer && open
@@ -41,7 +42,9 @@ function Sidebar({ open, isDrawer, onClose }: SidebarProps) {
   }
 
   function handleCreate() {
-    createConversation()
+    // §3.2.5: a conversa nova herda o modelo da ativa. É o comportamento menos
+    // surpreendente — quem está no Vitra e cria uma aba continua no Vitra.
+    createConversation(activeConversation.modelo)
     if (isDrawer) onClose()
   }
 
@@ -55,9 +58,14 @@ function Sidebar({ open, isDrawer, onClose }: SidebarProps) {
       aria-hidden={!open}
       inert={!open}
     >
-      {/* Cabeçalho interno do drawer (node 50:3446). O CSS o esconde no desktop. */}
+      {/* Cabeçalho interno do drawer (node 85:4590). O CSS o esconde no
+          desktop. O v3 troca o mascote pelo wordmark do modelo ativo. */}
       <div className="sidebar__drawer-head">
-        <img src={mascotHeader} alt="" className="sidebar__drawer-mascot" />
+        <img
+          src={ASSETS_POR_MODELO[activeConversation.modelo].wordmark}
+          alt=""
+          className="sidebar__drawer-wordmark"
+        />
         <button
           type="button"
           className="sidebar__drawer-close"

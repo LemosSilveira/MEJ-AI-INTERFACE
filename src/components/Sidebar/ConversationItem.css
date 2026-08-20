@@ -1,18 +1,11 @@
 .conversation-item {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  padding: 10px 14px;
-  border: none;
+  padding: 4px 6px 4px 8px;
   border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--color-text-primary);
-  font-family: var(--font-body);
-  font-size: 14px;
-  text-align: left;
-  cursor: pointer;
   flex-shrink: 0;
 }
 
@@ -22,18 +15,82 @@
 
 .conversation-item--active {
   background: var(--color-surface-alt);
+}
+
+/* O botão do título é o item elástico; badge, indicador e "..." não encolhem. */
+.conversation-item__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.conversation-item--active .conversation-item__main {
   font-weight: 600;
 }
 
-.conversation-item:focus-visible {
-  outline: 2px solid var(--color-brand-purple-strong);
+.conversation-item__main:focus-visible {
+  outline: 2px solid var(--cor-primaria);
   outline-offset: -2px;
+  border-radius: 6px;
 }
 
+/* §4.2.3: o dado já vem limitado a 60 chars; aqui é só o truncamento visual. */
 .conversation-item__title {
+  flex: 1 1 auto;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* §3.2.3: cor do modelo desta conversa. */
+.conversation-item__badge {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+}
+
+/* Só para leitor de tela: repetir o nome do modelo em texto roubaria a largura
+   do título, mas ele precisa ser anunciado. */
+.conversation-item__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.conversation-item__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--cor-primaria);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+}
+
+.conversation-item__input:focus {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
 }
 
 .conversation-item__loading {
@@ -41,7 +98,7 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--color-brand-purple-strong);
+  background: var(--cor-primaria);
   animation: conversation-item-pulse 1s infinite ease-in-out;
 }
 
@@ -54,5 +111,129 @@
   50% {
     opacity: 1;
     transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conversation-item__loading {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* 44×44 de verdade, em vez de um ::after que ampliasse a área: o
+   pseudo-elemento transbordava a linha e fazia a lista de conversas ganhar uma
+   barra de rolagem horizontal de 2px. O ícone continua com 20px. */
+.conversation-item__menu-trigger {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* O ícone é pintado por máscara, não por <img>: um SVG carregado em <img> não
+   aceita cor do CSS, e este precisa acompanhar --cor-primaria. Mesmo padrão da
+   marca d'água. O fill original do arquivo (#FAFAFA) é irrelevante — em
+   mask-image só o canal alpha conta. */
+.conversation-item__menu-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: var(--cor-primaria);
+  mask-image: url('../../assets/v3/icon-more-horiz.svg');
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-image: url('../../assets/v3/icon-more-horiz.svg');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+}
+
+.conversation-item__menu-trigger:hover {
+  background: rgba(39, 39, 42, 0.08);
+}
+
+.conversation-item__menu-trigger:focus-visible {
+  outline: 2px solid var(--cor-primaria);
+  outline-offset: 1px;
+}
+
+/* Node 85:3933: 152×130, zinc/700, raio 20px.
+   No Figma o menu invade a área do chat, mas a sidebar é um container de
+   scroll (`overflow-x: hidden` + `overflow-y: auto`), então qualquer filho
+   absoluto que passe da borda é RECORTADO — o menu aparecia cortado pela
+   metade. Ancorar pela direita o mantém dentro da sidebar em qualquer
+   largura. A alternativa seria um portal, complexidade que não se paga aqui. */
+.conversation-item__menu {
+  position: absolute;
+  top: calc(100% - 4px);
+  right: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 152px;
+  padding: 14px 10px;
+  border-radius: 20px;
+  background: var(--color-text-secondary);
+  box-shadow: 0 8px 24px rgba(39, 39, 42, 0.24);
+}
+
+.conversation-item__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.conversation-item__menu-item img {
+  display: block;
+  width: 20px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+.conversation-item__menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.conversation-item__menu-item:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -2px;
+}
+
+@media (max-width: 768px) {
+  /* Selecionar a conversa é o toque mais frequente do drawer. */
+  .conversation-item__main {
+    min-height: 44px;
+  }
+
+  .conversation-item__input {
+    min-height: 44px;
+    /* 16px evita o zoom automático do iOS ao focar o campo. */
+    font-size: 16px;
+  }
+
+  .conversation-item__menu-item {
+    font-size: 16px;
   }
 }

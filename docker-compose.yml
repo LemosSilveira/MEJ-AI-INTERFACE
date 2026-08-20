@@ -1,0 +1,18 @@
+# Opcional (PRD v3 §6.2), para não precisar decorar o --build-arg.
+#
+#   docker compose up --build
+#   -> http://localhost:8080/  (redireciona para /MEJ-AI-INTERFACE/)
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        # BUILD-TIME. Mudar este valor exige reconstruir a imagem
+        # (`--build`); reiniciar o contêiner não basta, porque o Vite já
+        # embutiu a URL no bundle. Ver o comentário no Dockerfile.
+        VITE_API_URL: https://projetopdi.atlab.ufc.br/api
+    image: mej-ia
+    ports:
+      - '8080:80'
+    restart: unless-stopped

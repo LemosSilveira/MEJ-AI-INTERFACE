@@ -6,6 +6,8 @@
   --color-surface: #fafafa; /* zinc/50 */
   --color-surface-alt: #f4f4f5; /* zinc/100 */
   --color-text-primary: #27272a; /* zinc/800 */
+  /* zinc/700 — texto do seletor de modelo e fundo dos popovers (v3). */
+  --color-text-secondary: #3f3f46;
   --color-brand-purple: #8b4fb9; /* UfcInova/70% */
   --color-brand-purple-strong: #5c069d;
   --color-nova-conversa-bg: rgba(92, 6, 157, 0.7);
@@ -49,4 +51,56 @@
   /* Layout — mobile (nodes 50:3390 e 50:3446), aplicado na Etapa 5 */
   --header-height-mobile: 40px;
   --sidebar-width-mobile: 270px;
+
+  /* Marca d'água: a opacidade saiu de dentro do SVG e virou token, para o
+     desenho ser tingido por --cor-primaria via mask-image (v3 §2.2). */
+  --watermark-opacity: 0.06;
+}
+
+/* ---------------------------------------------------------------------------
+   PRD v3 §2.2 — tema por modelo.
+
+   Só entram aqui os valores que DIFEREM entre Junior e Vitra. Tudo o que é
+   igual (zinc, tipografia, raios, espaçamentos e o roxo institucional do
+   UfcInova) fica no :root acima e não é duplicado.
+
+   Atenção ao que o v3 mudou de significado: o roxo UfcInova deixou de ser a
+   cor primária e virou cromo institucional (bordas da NavBar e da SlideBar,
+   logo). Quem é primário agora é --cor-primaria, que troca por modelo. Os
+   nomes antigos NÃO foram renomeados — o v3 §2.1.5 proíbe. Em vez disso, os
+   tokens derivados abaixo são reapontados para --cor-primaria, e todo o CSS
+   que já os consumia passa a tematizar sozinho.
+   --------------------------------------------------------------------------- */
+[data-modelo='junior'] {
+  --cor-primaria: #f47b22; /* Junior-100% (node 85:3761) */
+}
+
+[data-modelo='vitra'] {
+  --cor-primaria: #00adea; /* Vitra/100% (node 85:4036) */
+}
+
+/* Derivados — valem para qualquer modelo, então ficam num seletor só. */
+[data-modelo] {
+  --color-nova-conversa-bg: var(--cor-primaria);
+  --color-send-btn-bg: var(--cor-primaria);
+}
+
+/* A transição existe para a troca de modelo não piscar (§7.2). Fica no
+   seletor de tema, não no universal: animar `all` em tudo custa caro. */
+[data-modelo] .new-chat-button,
+[data-modelo] .chat-input,
+[data-modelo] .chat-input__send,
+[data-modelo] .chat-window__paw {
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-modelo] .new-chat-button,
+  [data-modelo] .chat-input,
+  [data-modelo] .chat-input__send,
+  [data-modelo] .chat-window__paw {
+    transition: none;
+  }
 }

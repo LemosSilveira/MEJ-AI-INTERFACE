@@ -1,0 +1,82 @@
+.confirm-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(39, 39, 42, 0.45);
+}
+
+/* Mesma linguagem dos popovers do Figma (zinc/700, raio 20px). */
+.confirm-dialog {
+  width: 100%;
+  max-width: 380px;
+  box-sizing: border-box;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--color-text-secondary);
+  color: #fff;
+  box-shadow: 0 12px 32px rgba(39, 39, 42, 0.32);
+}
+
+.confirm-dialog__titulo {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.confirm-dialog__descricao {
+  margin: 0 0 24px;
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: 14px;
+  line-height: 1.4;
+  /* O nome da conversa entra aqui; sem isto um título longo sem espaços
+     esticaria o diálogo (§4.2.3). */
+  overflow-wrap: anywhere;
+}
+
+.confirm-dialog__acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.confirm-dialog__botao {
+  padding: 10px 18px;
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.confirm-dialog__botao:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.confirm-dialog__botao--cancelar {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.confirm-dialog__botao--cancelar:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Vermelho, não --cor-primaria: a ação é destrutiva e não deve se parecer com
+   a cor de marca do modelo. */
+.confirm-dialog__botao--confirmar {
+  background: #dc2626;
+  color: #fff;
+}
+
+.confirm-dialog__botao--confirmar:hover {
+  background: #b91c1c;
+}

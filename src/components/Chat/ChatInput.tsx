@@ -1,7 +1,7 @@
 import { useEffect, useRef, type FormEvent, type KeyboardEvent } from 'react'
 import { useConversationsContext } from '../../hooks/useConversationsContext'
 import type { Conversation } from '../../types/chat'
-import sendButtonBg from '../../assets/send-button-bg.svg'
+import ModelSelector from './ModelSelector'
 import sendIcon from '../../assets/send-icon.png'
 import './ChatInput.css'
 
@@ -16,7 +16,7 @@ interface ChatInputProps {
 }
 
 function ChatInput({ conversation }: ChatInputProps) {
-  const { setDraft, sendMessage } = useConversationsContext()
+  const { setDraft, sendMessage, selecionarModelo } = useConversationsContext()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const restantes = MAX_INPUT_LENGTH - conversation.draft.length
@@ -67,15 +67,22 @@ function ChatInput({ conversation }: ChatInputProps) {
           {restantes === 0 ? 'Limite de 2000 caracteres atingido' : `${restantes} restantes`}
         </span>
       )}
-      <button
-        type="submit"
-        className="chat-input__send"
-        disabled={!canSend}
-        aria-label="Enviar pergunta"
-      >
-        <img src={sendButtonBg} alt="" className="chat-input__send-bg" />
-        <img src={sendIcon} alt="" className="chat-input__send-icon" />
-      </button>
+      {/* Node 85:3778: seletor de modelo e botão de enviar dividem o mesmo
+          bloco à direita do input, com 36px entre eles. */}
+      <div className="chat-input__acoes">
+        <ModelSelector
+          modelo={conversation.modelo}
+          onSelect={(modelo) => selecionarModelo(conversation.id, modelo)}
+        />
+        <button
+          type="submit"
+          className="chat-input__send"
+          disabled={!canSend}
+          aria-label="Enviar pergunta"
+        >
+          <img src={sendIcon} alt="" className="chat-input__send-icon" />
+        </button>
+      </div>
     </form>
   )
 }

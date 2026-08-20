@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Página não encontrada — MEJ IA</title>
+    <link rel="icon" type="image/svg+xml" href="/MEJ-AI-INTERFACE/brasao4_vertical_cor.svg" />
+    <!--
+      PRD v3 §5.
+
+      Arquivos em public/ são copiados VERBATIM para dist/ — o Vite não os
+      processa, não reescreve caminhos nem gera hash. Por isso:
+        - todo o CSS é inline (nada de importar o bundle, cujo nome muda a cada
+          build);
+        - os caminhos absolutos incluem o base /MEJ-AI-INTERFACE/ à mão (§5.4).
+
+      §5.5 e §8.4: esta página NÃO ecoa o caminho requisitado nem qualquer
+      parâmetro da URL. Não há script algum aqui, e portanto nenhum caminho por
+      onde dado da URL chegue à tela — que é o vetor clássico de XSS refletido.
+      Também não expõe detalhe de servidor.
+    -->
+    <style>
+      @font-face {
+        font-family: 'Metropolis';
+        src: url('/MEJ-AI-INTERFACE/fonts/Metropolis-Medium.otf') format('opentype');
+        font-weight: 500;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Metropolis';
+        src: url('/MEJ-AI-INTERFACE/fonts/Metropolis-Regular.otf') format('opentype');
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      /* Mesmos tokens do app. O 404 é servido fora do React e não sabe qual
+         modelo o usuário usava, então assume o tema padrão (Junior, §3.3). */
+      :root {
+        --cor-primaria: #f47b22;
+        --color-bg-page: #f5f6f8;
+        --color-surface: #fafafa;
+        --color-text-primary: #27272a;
+        --color-border-accent: #5c069d;
+        --font-display: 'Metropolis', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        background: var(--color-bg-page);
+        color: var(--color-text-primary);
+        font-family: var(--font-display);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      header {
+        flex-shrink: 0;
+        height: 91px;
+        display: flex;
+        align-items: center;
+        padding: 0 30px;
+        background: var(--color-surface);
+        border-bottom: 0.2px solid var(--color-border-accent);
+      }
+
+      header img {
+        display: block;
+        width: 150px;
+        height: 81px;
+        object-fit: contain;
+      }
+
+      main {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        padding: 40px 24px 64px;
+        text-align: center;
+      }
+
+      .codigo {
+        margin: 0;
+        font-size: 96px;
+        font-weight: 500;
+        line-height: 1;
+        color: var(--cor-primaria);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 500;
+      }
+
+      p {
+        margin: 0;
+        max-width: 46ch;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1.5;
+        opacity: 0.75;
+      }
+
+      .voltar {
+        margin-top: 14px;
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 12px 28px;
+        border-radius: 10px;
+        background: var(--cor-primaria);
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      .voltar:hover {
+        filter: brightness(1.08);
+      }
+
+      .voltar:focus-visible {
+        outline: 2px solid var(--color-border-accent);
+        outline-offset: 3px;
+      }
+
+      /* Marca d'água discreta, em CSS puro — sem GIF, conforme §7. */
+      .patas {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 18% 22%, var(--cor-primaria) 0 34%, transparent 35%),
+          radial-gradient(circle at 82% 78%, var(--cor-primaria) 0 30%, transparent 31%);
+        opacity: 0.06;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          height: 40px;
+          padding: 0 11px;
+        }
+        header img {
+          width: 70px;
+          height: 32px;
+        }
+        .codigo {
+          font-size: 68px;
+        }
+        h1 {
+          font-size: 22px;
+        }
+        p {
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="patas" aria-hidden="true"></div>
+
+    <header>
+      <img src="/MEJ-AI-INTERFACE/junior-wordmark.svg" alt="MEJ IA" />
+    </header>
+
+    <main>
+      <p class="codigo">404</p>
+      <h1>Esta página não existe</h1>
+      <p>
+        O endereço que você tentou abrir não faz parte da MEJ IA. Ele pode ter sido digitado
+        errado ou o link que você seguiu está desatualizado.
+      </p>
+      <a class="voltar" href="/MEJ-AI-INTERFACE/">Voltar para a MEJ IA</a>
+    </main>
+  </body>
+</html>

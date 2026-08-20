@@ -1,15 +1,19 @@
+import { MODELOS, type Modelo } from '../../constants/modelos'
 import './EmptyState.css'
 
-function EmptyState() {
+interface EmptyStateProps {
+  modelo: Modelo
+}
+
+function EmptyState({ modelo }: EmptyStateProps) {
+  const { apresentacao } = MODELOS[modelo]
+
   return (
     <div className="empty-state">
-      <p>
-        A MEJ IA foi desenvolvida e treinada com informações específicas da Universidade Federal
-        do Ceará para responder dúvidas sobre o Movimento Empresa Júnior. Diferente de modelos de
-        IA genéricos, ela utiliza uma base de conhecimento especializada para fornecer respostas
-        mais precisas sobre empresas juniores, editais, eventos, oportunidades, regulamentações e
-        iniciativas da UFC.
-      </p>
+      {/* O texto pode ser vazio para um modelo (era o caso do Vitra até o
+          texto oficial chegar). Sem a guarda, o gap do flex abriria um buraco
+          de 51px acima da pergunta. */}
+      {apresentacao && <p>{apresentacao}</p>}
       <p>Como posso lhe ajudar hoje ?</p>
     </div>
   )

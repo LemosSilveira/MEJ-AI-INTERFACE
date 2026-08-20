@@ -1,7 +1,13 @@
 .app-shell {
   display: flex;
   flex-direction: column;
+  /* 100vh é a altura da viewport SEM descontar o teclado virtual: no iOS e no
+     Android o teclado sobe por cima e leva junto a barra de input, que é
+     exatamente o que a Etapa 7 proíbe. `dvh` acompanha a viewport dinâmica e
+     encolhe quando o teclado abre. O 100vh acima fica como fallback para
+     navegador que não conhece dvh. */
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
