@@ -11,7 +11,7 @@ services:
         # BUILD-TIME. Mudar este valor exige reconstruir a imagem
         # (`--build`); reiniciar o contêiner não basta, porque o Vite já
         # embutiu a URL no bundle. Ver o comentário no Dockerfile.
-        VITE_API_URL: https://projetopdi.atlab.ufc.br/api
+        VITE_API_URL: https://inova.atlab.ufc.br/chat/api
     image: mej-ia
     ports:
       - '8080:80'

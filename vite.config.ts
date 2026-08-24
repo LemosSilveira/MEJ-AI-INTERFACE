@@ -8,12 +8,12 @@ export default defineConfig(({ command, isPreview }) => ({
   // serviria em '/' enquanto o index.html gerado aponta para /MEJ-AI-INTERFACE/,
   // e o preview devolveria o fallback de SPA no lugar de cada asset — ou seja,
   // não serviria para conferir o subdiretório, que é justamente o seu papel.
-  base: command === 'build' || isPreview ? '/MEJ-AI-INTERFACE/' : '/',
+  base: command === 'build' || isPreview ? '/chat/' : '/',
   plugins: [react()],
   server: {
     proxy: {
       '/api': {
-        target: 'https://projetopdi.atlab.ufc.br/api',
+        target: 'https://inova.atlab.ufc.br/chat/api',
         changeOrigin: true,
         secure: true,
         rewrite: (path) => path.replace(/^\/api/, ''),

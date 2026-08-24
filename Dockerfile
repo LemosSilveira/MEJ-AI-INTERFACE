@@ -38,7 +38,7 @@ FROM nginx:alpine AS runtime
 # O bundle referencia os assets em /MEJ-AI-INTERFACE/ (base do vite.config.ts),
 # então ele precisa morar nesse subdiretório — servir na raiz daria 404 em
 # todos os assets. Ver a explicação no nginx.conf.
-COPY --from=build /app/dist /usr/share/nginx/html/MEJ-AI-INTERFACE
+COPY --from=build /app/dist /usr/share/nginx/html/chat
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY security-headers.conf /etc/nginx/snippets/security-headers.conf
